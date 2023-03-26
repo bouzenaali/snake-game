@@ -54,10 +54,10 @@ public class GamePanel extends JPanel implements ActionListener {
     public void draw(Graphics g){
         if (running){
             // draws a grid
-            for(int i=0; i<SCREEN_HEIGHT/UNIT_SIZE;i++){
-                g.drawLine(i*UNIT_SIZE, 0, i*UNIT_SIZE, SCREEN_HEIGHT);
-                g.drawLine(0, i*UNIT_SIZE, SCREEN_WIDTH, i*UNIT_SIZE);
-            }
+            // for(int i=0; i<SCREEN_HEIGHT/UNIT_SIZE;i++){
+            //     g.drawLine(i*UNIT_SIZE, 0, i*UNIT_SIZE, SCREEN_HEIGHT);
+            //     g.drawLine(0, i*UNIT_SIZE, SCREEN_WIDTH, i*UNIT_SIZE);
+            // }
             // draws an apple
             g.setColor(Color.red);
             g.fillOval(appleX, appleY, UNIT_SIZE, UNIT_SIZE);
@@ -80,8 +80,10 @@ public class GamePanel extends JPanel implements ActionListener {
     }
 
     public void newApple(){
-        appleX = random.nextInt((int)(SCREEN_WIDTH*UNIT_SIZE))*UNIT_SIZE;
-        appleY = random.nextInt((int)(SCREEN_HEIGHT*UNIT_SIZE))*UNIT_SIZE;
+        // creates random coordinates
+        appleX = random.nextInt((int)(SCREEN_WIDTH/UNIT_SIZE))*UNIT_SIZE;
+        appleY = random.nextInt((int)(SCREEN_HEIGHT/UNIT_SIZE))*UNIT_SIZE;
+        
     }
 
     public void move(){
@@ -109,6 +111,7 @@ public class GamePanel extends JPanel implements ActionListener {
     
 
     public void checkApple(){
+        // checks if apple is eaten and increases bodysize
         if (x[0]==appleX && y[0] == appleY){
             bodyParts++;
             applesEaten++;
@@ -118,14 +121,14 @@ public class GamePanel extends JPanel implements ActionListener {
 
     public void checkCollisions(){
         // checks if head collids with body
-        for (int i= bodyParts; i>0; i--){
+        for (int i = bodyParts; i>0; i--){
             if(x[0]==x[i] && y[0]==y[i]){
                 running = false;
             }
         }
         // checks if head touches left border
         if(x[0] < 0){
-            running=false;
+            running = false;
         }
         // checks if head touches right border
         if(x[0] > SCREEN_WIDTH){
